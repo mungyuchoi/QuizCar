@@ -3,6 +3,7 @@ package com.moon.quizcar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -30,7 +31,13 @@ class WordActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.run {
             displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-            customView = LayoutInflater.from(this@WordActivity).inflate(R.layout.word_toolbar, null)
+            setCustomView(
+                LayoutInflater.from(this@WordActivity).inflate(R.layout.word_toolbar, null),
+                ActionBar.LayoutParams(
+                    ActionBar.LayoutParams.MATCH_PARENT,
+                    ActionBar.LayoutParams.MATCH_PARENT
+                )
+            )
         }
 
         for (i in 0 until 15) {
@@ -59,6 +66,11 @@ class WordActivity : AppCompatActivity() {
         updateButton(binding.btn2)
         updateButton(binding.btn3)
         updateButton(binding.btn4)
+        binding.toolbar.findViewById<ImageView>(R.id.back)?.run {
+            setOnClickListener {
+                finish()
+            }
+        }
     }
 
     private fun updateButton(textView: TextView) {
@@ -70,12 +82,35 @@ class WordActivity : AppCompatActivity() {
                 } else {
                     updateAnimate()
                     binding.toolbar.findViewById<TextView>(R.id.stage)?.run {
-                        text = text.toString()+ stage.toString()
+                        text = stage.toString()
                     }
                 }
             } else {
                 // 틀림
+                updateHeart()
+            }
+        }
+    }
 
+    private fun updateHeart() {
+        heart--
+        when(heart) {
+            0 ->{
+                binding.toolbar.findViewById<ImageView>(R.id.heart_1).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_2).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_3).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+
+                // Result화면으로 변경
+            }
+            1 -> {
+                binding.toolbar.findViewById<ImageView>(R.id.heart_1).setImageDrawable(getDrawable(R.drawable.ic_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_2).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_3).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+            }
+            2 -> {
+                binding.toolbar.findViewById<ImageView>(R.id.heart_1).setImageDrawable(getDrawable(R.drawable.ic_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_2).setImageDrawable(getDrawable(R.drawable.ic_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_3).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
             }
         }
     }

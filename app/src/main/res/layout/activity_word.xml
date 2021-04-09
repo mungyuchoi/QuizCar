@@ -13,68 +13,145 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/thumbnail"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/board"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginHorizontal="24dp"
-        android:background="#123122"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@id/btn_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_3"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="#C8C8C8"
-        android:text="3"
-        app:cornerRadius="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="#fff" />
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginHorizontal="24dp"
+            android:background="#123122"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@id/btn_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_4"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="#C8C8C8"
-        android:text="4"
-        app:cornerRadius="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_3"
-        app:rippleColor="#fff" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_3"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#C8C8C8"
+            android:text="3"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:rippleColor="#fff" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_1"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="#C8C8C8"
-        android:text="1"
-        app:cornerRadius="12dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_3"
-        app:layout_constraintEnd_toStartOf="@id/btn_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="#000" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_4"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="50dp"
+            android:backgroundTint="#C8C8C8"
+            android:text="4"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_3"
+            app:rippleColor="#fff" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_2"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="#C8C8C8"
-        android:text="2"
-        app:cornerRadius="12dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_1"
-        app:rippleColor="#fff" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_1"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#C8C8C8"
+            android:text="1"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_3"
+            app:layout_constraintEnd_toStartOf="@id/btn_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:rippleColor="#000" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_2"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#C8C8C8"
+            android:text="2"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_1"
+            app:rippleColor="#fff" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/word_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="result: "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continue_game"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:text="계속: $-300"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/result" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ads_video"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="삼성 멤버스 동영상 보기 +290"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/continue_game" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/retry"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:text="삼성 멤버스 다시 시도"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ads_video" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/setting"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="삼성 멤버스 설정"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/retry" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/description"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:text="끝을 내기 위해서는 정답을 맞춰야 해요."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setting" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
