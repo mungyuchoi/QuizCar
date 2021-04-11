@@ -125,6 +125,7 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:enabled="false"
             android:text="동영상 보기 +290"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -140,28 +141,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ads_video" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/setting"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:text="설정"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/retry" />
-
         <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="50dp"
-            android:textSize="20dp"
             android:text="끝을 내기 위해서는 정답을 맞춰야 해요."
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/setting" />
+            app:layout_constraintTop_toBottomOf="@id/retry" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent" />
+    <!--        ads:adUnitId="ca-app-pub-3578188838033823/6353110962"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
