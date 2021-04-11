@@ -20,7 +20,7 @@
         android:layout_height="24dp"
         android:layout_marginStart="10dp"
         android:drawableStart="@drawable/ic_money"
-        android:drawablePadding="5dp"
+        android:drawablePadding="3dp"
         android:text="gold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/back"
@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/stage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:gravity="center"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,8 +59,8 @@
         android:id="@+id/heart_3"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_heart"
         android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_heart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

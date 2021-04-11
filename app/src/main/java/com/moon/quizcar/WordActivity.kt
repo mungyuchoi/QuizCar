@@ -1,8 +1,10 @@
 package com.moon.quizcar
 
 import android.os.Bundle
+import android.renderscript.Script
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -10,6 +12,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.moon.quizcar.data.Item
 import com.moon.quizcar.databinding.ActivityWordBinding
+import kotlinx.android.synthetic.main.activity_word.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -18,6 +21,8 @@ class WordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWordBinding
 
     private var stage = 1
+
+    private var lastStage = 1
 
     private var heart = 3
 
@@ -44,11 +49,14 @@ class WordActivity : AppCompatActivity() {
             list.add(Item(Const().thumbnail[i], Const().name[i]))
         }
         list.shuffle()
-        var pref = getSharedPreferences("quiz", MODE_PRIVATE)
-        stage = pref.getInt("stage", 1)
+        binding.toolbar.findViewById<TextView>(R.id.gold).run {
+            var pref = getSharedPreferences("quiz", MODE_PRIVATE)
+            text = pref.getInt("gold", 200).toString()
+        }
 
         nextStage()
         initButton()
+        initResult()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -58,6 +66,33 @@ class WordActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun initResult() {
+        var pref = getSharedPreferences("quiz", MODE_PRIVATE)
+        binding.continueGame.setOnClickListener {
+            if (pref.getInt("gold", 200) < 300) {
+                Toast.makeText(
+                    this,
+                    "Gold 가 부족하여 계속 할 수 없습니다.\n충전 후 이용 부탁 드립니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            binding.wordResult.visibility = View.INVISIBLE
+            binding.board.visibility = View.VISIBLE
+            heart = 4
+            updateHeart()
+        }
+        binding.retry.setOnClickListener {
+            stage = 1
+            nextStage()
+            binding.wordResult.visibility = View.INVISIBLE
+            binding.board.visibility = View.VISIBLE
+            heart = 4
+            updateHeart()
         }
     }
 
@@ -94,23 +129,43 @@ class WordActivity : AppCompatActivity() {
 
     private fun updateHeart() {
         heart--
-        when(heart) {
-            0 ->{
-                binding.toolbar.findViewById<ImageView>(R.id.heart_1).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
-                binding.toolbar.findViewById<ImageView>(R.id.heart_2).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
-                binding.toolbar.findViewById<ImageView>(R.id.heart_3).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+        when (heart) {
+            0 -> {
+                binding.toolbar.findViewById<ImageView>(R.id.heart_1)
+                    .setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_2)
+                    .setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_3)
+                    .setImageDrawable(getDrawable(R.drawable.ic_no_heart))
 
                 // Result화면으로 변경
+                binding.board.visibility = View.INVISIBLE
+                binding.wordResult.visibility = View.VISIBLE
+                binding.result.text = "결과: $stage\n최고: $lastStage"
             }
             1 -> {
-                binding.toolbar.findViewById<ImageView>(R.id.heart_1).setImageDrawable(getDrawable(R.drawable.ic_heart))
-                binding.toolbar.findViewById<ImageView>(R.id.heart_2).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
-                binding.toolbar.findViewById<ImageView>(R.id.heart_3).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_1)
+                    .setImageDrawable(getDrawable(R.drawable.ic_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_2)
+                    .setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_3)
+                    .setImageDrawable(getDrawable(R.drawable.ic_no_heart))
             }
             2 -> {
-                binding.toolbar.findViewById<ImageView>(R.id.heart_1).setImageDrawable(getDrawable(R.drawable.ic_heart))
-                binding.toolbar.findViewById<ImageView>(R.id.heart_2).setImageDrawable(getDrawable(R.drawable.ic_heart))
-                binding.toolbar.findViewById<ImageView>(R.id.heart_3).setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_1)
+                    .setImageDrawable(getDrawable(R.drawable.ic_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_2)
+                    .setImageDrawable(getDrawable(R.drawable.ic_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_3)
+                    .setImageDrawable(getDrawable(R.drawable.ic_no_heart))
+            }
+            3 -> {
+                binding.toolbar.findViewById<ImageView>(R.id.heart_1)
+                    .setImageDrawable(getDrawable(R.drawable.ic_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_2)
+                    .setImageDrawable(getDrawable(R.drawable.ic_heart))
+                binding.toolbar.findViewById<ImageView>(R.id.heart_3)
+                    .setImageDrawable(getDrawable(R.drawable.ic_heart))
             }
         }
     }
@@ -138,6 +193,12 @@ class WordActivity : AppCompatActivity() {
                 binding.thumbnail.alpha = 1f
                 if (stage < list.size) {
                     stage++
+                    var pref = getSharedPreferences("quiz", MODE_PRIVATE)
+                    lastStage = pref.getInt("stage", 1)
+                    if (lastStage < stage) {
+                        lastStage = stage
+                        pref.edit().putInt("stage", lastStage).commit()
+                    }
                     nextStage()
                 } else {
                     Toast.makeText(this@WordActivity, "게임 끝!", Toast.LENGTH_SHORT).show()
