@@ -8,21 +8,107 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="280dp"
+        android:layout_height="80dp"
+        android:text="Game Start!"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:icon="@drawable/ic_run"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/clear"
+    <TextView
+        android:id="@+id/stage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clear"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="stage: 1"
+        app:layout_constraintEnd_toEndOf="@id/word"
+        app:layout_constraintStart_toStartOf="@id/word"
         app:layout_constraintTop_toBottomOf="@id/word" />
+
+    <ImageView
+        android:id="@+id/other_game_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_palette"
+        app:layout_constraintEnd_toStartOf="@id/review_image"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stage" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/other_game"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="다른 게임"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/other_game_image"
+        app:layout_constraintStart_toStartOf="@id/other_game_image"
+        app:layout_constraintTop_toBottomOf="@id/other_game_image" />
+
+    <ImageView
+        android:id="@+id/review_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_review"
+        app:layout_constraintEnd_toStartOf="@id/purchase_image"
+        app:layout_constraintStart_toEndOf="@id/other_game_image"
+        app:layout_constraintTop_toBottomOf="@id/stage" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/review"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="리뷰 남기기"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/review_image"
+        app:layout_constraintStart_toStartOf="@id/review_image"
+        app:layout_constraintTop_toBottomOf="@id/review_image" />
+
+    <ImageView
+        android:id="@+id/purchase_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_purchase"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/review_image"
+        app:layout_constraintTop_toBottomOf="@id/stage" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/purchase"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구매"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/purchase_image"
+        app:layout_constraintStart_toStartOf="@id/purchase_image"
+        app:layout_constraintTop_toBottomOf="@id/purchase_image" />
+
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent" />
+    <!--        ads:adUnitId="ca-app-pub-3578188838033823/6353110962"-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
