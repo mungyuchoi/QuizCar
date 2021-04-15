@@ -1,11 +1,15 @@
 package com.moon.quizcar
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -52,10 +56,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.purchase.setOnClickListener {
             MaterialAlertDialogBuilder(this).apply {
-                setView(
-                    LayoutInflater.from(this@MainActivity)
-                        .inflate(R.layout.dialog_purchase, null, false)
-                )
+                val view = LayoutInflater.from(this@MainActivity)
+                    .inflate(R.layout.dialog_purchase, null, false).apply {
+                        findViewById<ConstraintLayout>(R.id.thousand_layout).setOnClickListener {
+                        }
+                        findViewById<ConstraintLayout>(R.id.five_thousand_layout).setOnClickListener {
+                        }
+                        findViewById<ConstraintLayout>(R.id.ten_thousand_layout).setOnClickListener {
+                        }
+                    }
+                setView(view)
                 setTitle("구매")
                 setMessage("원하는 상품을 구매해주세요.")
                 setNegativeButton("취소") { dialog, _ ->
@@ -63,14 +73,19 @@ class MainActivity : AppCompatActivity() {
                 }
                 show()
             }
-
         }
         binding.purchaseImage.setOnClickListener {
             MaterialAlertDialogBuilder(this).apply {
-                setView(
-                    LayoutInflater.from(this@MainActivity)
-                        .inflate(R.layout.dialog_purchase, null, false)
-                )
+                val view = LayoutInflater.from(this@MainActivity)
+                    .inflate(R.layout.dialog_purchase, null, false).apply {
+                        findViewById<ConstraintLayout>(R.id.thousand_layout).setOnClickListener {
+                        }
+                        findViewById<ConstraintLayout>(R.id.five_thousand_layout).setOnClickListener {
+                        }
+                        findViewById<ConstraintLayout>(R.id.ten_thousand_layout).setOnClickListener {
+                        }
+                    }
+                setView(view)
                 setTitle("구매")
                 setMessage("원하는 상품을 구매해주세요.")
                 setNegativeButton("취소") { dialog, _ ->
@@ -79,13 +94,6 @@ class MainActivity : AppCompatActivity() {
                 show()
             }
         }
-
-
-//        binding.clear.setOnClickListener {
-//            var pref = getSharedPreferences("quiz", MODE_PRIVATE)
-//            pref.edit().putInt("stage", 1).commit()
-//            updateStage()
-//        }
 
         MobileAds.initialize(this) {}
         binding.adView.run {

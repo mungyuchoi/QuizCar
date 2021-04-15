@@ -6,10 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_quiz_car"
+        android:scaleType="fitStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/word"
         style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="80dp"
         android:text="Game Start!"
         android:textSize="30dp"

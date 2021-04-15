@@ -1,7 +1,6 @@
 package com.moon.quizcar
 
 import android.os.Bundle
-import android.renderscript.Script
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -16,8 +15,6 @@ import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.initialization.InitializationStatus
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdCallback
@@ -32,6 +29,7 @@ class WordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWordBinding
     private lateinit var rewardedAd: RewardedAd
+    private lateinit var timerTask: Timer
 
     private var stage = 1
 
@@ -40,6 +38,8 @@ class WordActivity : AppCompatActivity() {
     private var heart = 3
 
     private val list = ArrayList<Item>()
+
+    private var time = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +71,8 @@ class WordActivity : AppCompatActivity() {
         initButton()
         initResult()
         initAds()
+
+        start()
     }
 
     private fun initAds() {
@@ -129,6 +131,7 @@ class WordActivity : AppCompatActivity() {
             binding.board.visibility = View.VISIBLE
             heart = 4
             updateHeart()
+            start()
         }
         binding.retry.setOnClickListener {
             stage = 1
@@ -137,6 +140,8 @@ class WordActivity : AppCompatActivity() {
             binding.board.visibility = View.VISIBLE
             heart = 4
             updateHeart()
+            time = 0
+            start()
         }
         binding.adsVideo.setOnClickListener {
             if (rewardedAd.isLoaded) {
@@ -178,11 +183,12 @@ class WordActivity : AppCompatActivity() {
 
     private fun createAndLoadRewardedAd(): RewardedAd {
         val rewardedAd = RewardedAd(this, "ca-app-pub-3940256099942544/5224354917")
-        val adLoadCallback = object: RewardedAdLoadCallback() {
+        val adLoadCallback = object : RewardedAdLoadCallback() {
             override fun onRewardedAdLoaded() {
                 // Ad successfully loaded.
                 binding.adsVideo.isEnabled = true
             }
+
             override fun onRewardedAdFailedToLoad(adError: LoadAdError) {
                 // Ad failed to load.
             }
@@ -207,13 +213,30 @@ class WordActivity : AppCompatActivity() {
         textView.setOnClickListener {
             if (textView.text.toString().equals(list[stage - 1].name, ignoreCase = true)) {
                 // 정답
+                binding.toolbar.findViewById<TextView>(R.id.gold).run {
+                    var pref = getSharedPreferences("quiz", MODE_PRIVATE)
+                    val value = pref.getInt("gold", 200) + 10
+                    text = value.toString()
+                    pref.edit().putInt("gold", value).commit()
+                }
                 if (stage == list.size) {
-                    finish()
+                    // Result화면으로 변경
+                    binding.board.visibility = View.INVISIBLE
+                    binding.wordResult.visibility = View.VISIBLE
+                    binding.result.text = "결과: $stage\n최고: $lastStage"
+                    binding.continueGame.text = "순위 올리기"
+                    binding.continueGame.setOnClickListener {
+                        // TODO startActivity RankActivity
+                        // AlertDialog (name), score(time)
+                    }
+                    binding.description.text = "축하합니다! 모두 풀었습니다!"
+                    pause()
                 } else {
                     updateAnimate()
                     binding.toolbar.findViewById<TextView>(R.id.stage)?.run {
                         text = stage.toString()
                     }
+
                 }
             } else {
                 // 틀림
@@ -224,6 +247,7 @@ class WordActivity : AppCompatActivity() {
 
     private fun updateHeart() {
         heart--
+        time += 10
         when (heart) {
             0 -> {
                 binding.toolbar.findViewById<ImageView>(R.id.heart_1)
@@ -237,6 +261,7 @@ class WordActivity : AppCompatActivity() {
                 binding.board.visibility = View.INVISIBLE
                 binding.wordResult.visibility = View.VISIBLE
                 binding.result.text = "결과: $stage\n최고: $lastStage"
+                pause()
             }
             1 -> {
                 binding.toolbar.findViewById<ImageView>(R.id.heart_1)
@@ -399,6 +424,18 @@ class WordActivity : AppCompatActivity() {
                 binding.btn1.rippleColor = red
             }
         }
+    }
 
+    private fun start() {
+        timerTask = kotlin.concurrent.timer(period = 1000) {
+            time++
+            runOnUiThread {
+                binding.score.text = time.toString()
+            }
+        }
+    }
+
+    private fun pause() {
+        timerTask.cancel()
     }
 }
