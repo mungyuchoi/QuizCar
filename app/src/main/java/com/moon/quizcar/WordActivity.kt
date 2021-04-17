@@ -93,7 +93,7 @@ class WordActivity : AppCompatActivity() {
 
         rewardedAd = RewardedAd(
             this,
-            "ca-app-pub-3940256099942544/5224354917"
+            "ca-app-pub-3578188838033823/6920651821"
         )
         val adLoadCallback = object : RewardedAdLoadCallback() {
             override fun onRewardedAdLoaded() {
@@ -192,7 +192,7 @@ class WordActivity : AppCompatActivity() {
     }
 
     private fun createAndLoadRewardedAd(): RewardedAd {
-        val rewardedAd = RewardedAd(this, "ca-app-pub-3940256099942544/5224354917")
+        val rewardedAd = RewardedAd(this, "ca-app-pub-3578188838033823/6920651821")
         val adLoadCallback = object : RewardedAdLoadCallback() {
             override fun onRewardedAdLoaded() {
                 // Ad successfully loaded.

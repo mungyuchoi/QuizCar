@@ -8,6 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -30,6 +32,12 @@ class RankActivity : AppCompatActivity() {
         binding.recyclerview.run {
             setHasFixedSize(true)
             this.adapter = rankAdapter
+        }
+
+
+        MobileAds.initialize(this) {}
+        binding.adView.run {
+            loadAd(AdRequest.Builder().build())
         }
 
         FirebaseDatabase.getInstance().reference.child("Rank")
