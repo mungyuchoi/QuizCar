@@ -16,12 +16,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var billingManager: BillingManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        billingManager = BillingManager(this)
 
         binding.word.setOnClickListener {
             startActivity(Intent(this, WordActivity::class.java))
@@ -56,10 +57,13 @@ class MainActivity : AppCompatActivity() {
                 val view = LayoutInflater.from(this@MainActivity)
                     .inflate(R.layout.dialog_purchase, null, false).apply {
                         findViewById<ConstraintLayout>(R.id.thousand_layout).setOnClickListener {
+                            billingManager.purchase("1000", this@MainActivity)
                         }
                         findViewById<ConstraintLayout>(R.id.five_thousand_layout).setOnClickListener {
+                            billingManager.purchase("5000", this@MainActivity)
                         }
                         findViewById<ConstraintLayout>(R.id.ten_thousand_layout).setOnClickListener {
+                            billingManager.purchase("10000", this@MainActivity)
                         }
                     }
                 setView(view)
@@ -76,10 +80,13 @@ class MainActivity : AppCompatActivity() {
                 val view = LayoutInflater.from(this@MainActivity)
                     .inflate(R.layout.dialog_purchase, null, false).apply {
                         findViewById<ConstraintLayout>(R.id.thousand_layout).setOnClickListener {
+                            billingManager.purchase("1000", this@MainActivity)
                         }
                         findViewById<ConstraintLayout>(R.id.five_thousand_layout).setOnClickListener {
+                            billingManager.purchase("5000", this@MainActivity)
                         }
                         findViewById<ConstraintLayout>(R.id.ten_thousand_layout).setOnClickListener {
+                            billingManager.purchase("10000", this@MainActivity)
                         }
                     }
                 setView(view)
