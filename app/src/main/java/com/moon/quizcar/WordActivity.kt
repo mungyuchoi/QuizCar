@@ -1,16 +1,21 @@
 package com.moon.quizcar
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -19,9 +24,13 @@ import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdCallback
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.database.FirebaseDatabase
 import com.moon.quizcar.data.Item
 import com.moon.quizcar.databinding.ActivityWordBinding
 import kotlinx.android.synthetic.main.activity_word.view.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -58,7 +67,7 @@ class WordActivity : AppCompatActivity() {
             )
         }
 
-        for (i in 0 until 15) {
+        for (i in 0 until 5) {
             list.add(Item(Const().thumbnail[i], Const().name[i]))
         }
         list.shuffle()
@@ -209,6 +218,7 @@ class WordActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateButton(textView: TextView) {
         textView.setOnClickListener {
             if (textView.text.toString().equals(list[stage - 1].name, ignoreCase = true)) {
@@ -226,8 +236,40 @@ class WordActivity : AppCompatActivity() {
                     binding.result.text = "결과: $stage\n최고: $lastStage"
                     binding.continueGame.text = "순위 올리기"
                     binding.continueGame.setOnClickListener {
-                        // TODO startActivity RankActivity
-                        // AlertDialog (name), score(time)
+                        MaterialAlertDialogBuilder(this).apply {
+                            val view = LayoutInflater.from(this@WordActivity)
+                                .inflate(R.layout.dialog_rank, null, false)
+                            val editText = view.findViewById<EditText>(R.id.edit_rank)
+                            setView(view)
+                            setTitle("순위")
+                            setMessage("아이디를 입력해주세요.")
+                            setPositiveButton("올리기") { dialog, _ ->
+                                // Firebase ref update
+                                Log.i(
+                                    "MQ!", "rank id: ${editText.text.toString()}" +
+                                            "\nscore: ${binding.score.text}" +
+                                            "\ndate: ${LocalDateTime.now()
+                                                .format(DateTimeFormatter.ISO_LOCAL_DATE)}"
+                                )
+                                val registerRef =
+                                    FirebaseDatabase.getInstance().reference.child("Rank")
+                                        .child((Calendar.MONTH + 1).toString() + "월").push()
+                                registerRef.setValue(
+                                    Rank(
+                                        editText.text.toString(),
+                                        binding.score.text.toString(),
+                                        LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+                                    )
+                                )
+                                finish()
+                                startActivity(Intent(this@WordActivity, RankActivity::class.java))
+                                dialog.dismiss()
+                            }
+                            setNegativeButton("취소") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            show()
+                        }
                     }
                     binding.description.text = "축하합니다! 모두 풀었습니다!"
                     pause()

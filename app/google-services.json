@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "213612467342",
+    "project_id": "quizcar-acc62",
+    "storage_bucket": "quizcar-acc62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213612467342:android:95b286fc021ab9448ca5df",
+        "android_client_info": {
+          "package_name": "com.moon.quizcar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213612467342-c6g1h0gvo1qdminso028v8ap0vbk1dm4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moon.quizcar",
+            "certificate_hash": "ab2e547f57cbb4215b27ee18d118f08d3779f506"
+          }
+        },
+        {
+          "client_id": "213612467342-054lt5f626qt14oajof60ifc6smub5lm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfbkxsHb3NSwgUp3aTph5GGTvHJnuYbf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "213612467342-054lt5f626qt14oajof60ifc6smub5lm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

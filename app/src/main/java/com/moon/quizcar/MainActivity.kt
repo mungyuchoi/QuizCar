@@ -1,13 +1,10 @@
 package com.moon.quizcar
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.ads.AdRequest
@@ -93,6 +90,15 @@ class MainActivity : AppCompatActivity() {
                 }
                 show()
             }
+        }
+        
+        binding.rank.setOnClickListener {
+            Toast.makeText(this, "이달의 순위!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RankActivity::class.java))
+        }
+        binding.rankImage.setOnClickListener {
+            Toast.makeText(this, "이달의 순위!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, RankActivity::class.java))
         }
 
         MobileAds.initialize(this) {}
