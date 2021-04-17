@@ -34,26 +34,27 @@ class RankActivity : AppCompatActivity() {
 
         FirebaseDatabase.getInstance().reference.child("Rank")
             .child((Calendar.MONTH + 1).toString() + "월").orderByChild("score").run {
-            addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    rankList.clear()
-                    rankList.add(Rank("순위", "점수", "날짜"))
-                    for (snap in snapshot.children) {
-                        val info = snap.getValue(Rank::class.java)
-                        rankList.add(info!!)
+                addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        rankList.clear()
+                        rankList.add(Rank("순위", 0, "날짜"))
+                        for (snap in snapshot.children) {
+                            val info = snap.getValue(Rank::class.java)
+                            rankList.add(info!!)
+                        }
+                        if (rankList.size == 0) {
+                            Toast.makeText(this@RankActivity, "기록이 없습니다.", Toast.LENGTH_SHORT)
+                                .show()
+                            finish()
+                        }
+                        rankAdapter.setItems(rankList)
                     }
-                    if (rankList.size == 0) {
-                        Toast.makeText(this@RankActivity, "기록이 없습니다.", Toast.LENGTH_SHORT).show()
-                        finish()
+
+                    override fun onCancelled(error: DatabaseError) {
                     }
-                    rankAdapter.setItems(rankList)
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                }
-
-            })
-        }
+                })
+            }
 
     }
 }
@@ -101,8 +102,8 @@ class RankAdapter(private val items: List<Rank>?) : RecyclerView.Adapter<RankAda
 
 
 data class Rank(
-    val id: String="",
-    val score: String="",
-    val date: String=""
+    val id: String = "",
+    val score: Int = 0,
+    val date: String = ""
 )
 

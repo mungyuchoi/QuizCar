@@ -16,7 +16,26 @@ class Const {
         R.drawable.k5,
         R.drawable.k3,
         R.drawable.thenewray,
-        R.drawable.allnewmorning
+        R.drawable.allnewmorning,
+        R.drawable.avante,
+        R.drawable.chairman,
+        R.drawable.cruze,
+        R.drawable.equus,
+        R.drawable.galloper,
+        R.drawable.genesis,
+        R.drawable.grandeur,
+        R.drawable.korando,
+        R.drawable.malibu,
+        R.drawable.orlando,
+        R.drawable.porter,
+        R.drawable.qm6,
+        R.drawable.rexton,
+        R.drawable.santafe,
+        R.drawable.sm3,
+        R.drawable.sm6,
+        R.drawable.sonata,
+        R.drawable.starex,
+        R.drawable.tivoli
     )
 
     val name = arrayOf(
@@ -34,6 +53,25 @@ class Const {
         "K5",
         "K3",
         "더뉴레이",
-        "올뉴모닝"
+        "올뉴모닝",
+        "아반떼",
+        "체어맨",
+        "크루즈",
+        "에쿠스",
+        "갤로퍼",
+        "제네시스",
+        "그랜져",
+        "코란도",
+        "말리부",
+        "올랜도",
+        "포터",
+        "QM6",
+        "렉스턴",
+        "산타페",
+        "SM3",
+        "SM6",
+        "소나타",
+        "스타렉스",
+        "티볼리"
     )
 }

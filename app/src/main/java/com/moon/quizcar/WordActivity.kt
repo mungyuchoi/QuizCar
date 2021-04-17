@@ -50,6 +50,7 @@ class WordActivity : AppCompatActivity() {
 
     private var time = 0
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWordBinding.inflate(layoutInflater)
@@ -67,7 +68,7 @@ class WordActivity : AppCompatActivity() {
             )
         }
 
-        for (i in 0 until 5) {
+        for (i in 0 until 34) {
             list.add(Item(Const().thumbnail[i], Const().name[i]))
         }
         list.shuffle()
@@ -206,6 +207,7 @@ class WordActivity : AppCompatActivity() {
         return rewardedAd
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initButton() {
         updateButton(binding.btn1)
         updateButton(binding.btn2)
@@ -257,7 +259,7 @@ class WordActivity : AppCompatActivity() {
                                 registerRef.setValue(
                                     Rank(
                                         editText.text.toString(),
-                                        binding.score.text.toString(),
+                                        Integer.parseInt(binding.score.text.toString()),
                                         LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
                                     )
                                 )
