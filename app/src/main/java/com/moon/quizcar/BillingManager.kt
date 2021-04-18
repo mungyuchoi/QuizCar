@@ -4,13 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.android.billingclient.api.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BillingManager(context: Context) {
+class BillingManager(val activity: MainActivity) {
     private val TAG = "BillingManager"
 
     private val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, purchases ->
@@ -30,13 +31,19 @@ class BillingManager(context: Context) {
     private val consumeListener = ConsumeResponseListener { billingResult, purchaseToken ->
         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             Log.d(TAG, "상품을 성공적으로 소모:$purchaseToken")
-            Toast.makeText(context, "골드가 충전되었습니다.", Toast.LENGTH_SHORT).show()
+            var pref = activity.getSharedPreferences("quiz", AppCompatActivity.MODE_PRIVATE)
+            val purchase = pref.getInt("purchase", 0)
+            var gold = pref.getInt("gold", 200)
+            gold += purchase
+            pref.edit().putInt("gold", gold).commit()
+            Toast.makeText(activity, "골드가 $purchase 충전되었습니다.", Toast.LENGTH_SHORT).show()
+            activity.updateGold()
         } else {
             Log.d(TAG, "상품 소모에 실패 오류코드:${billingResult.responseCode} 상품코드:$purchaseToken")
         }
     }
     private var billingClient =
-        BillingClient.newBuilder(context).setListener(purchasesUpdatedListener)
+        BillingClient.newBuilder(activity).setListener(purchasesUpdatedListener)
             .enablePendingPurchases().build()
 
     init {
@@ -114,7 +121,6 @@ class BillingManager(context: Context) {
     }
 
     fun purchase(item: String, activity: Activity) {
-        Log.i("MQ!", "purchase item:$item")
         if (skuDetails.size > 0) {
             var skuDetail: SkuDetails? = null
             for (i in 0 until skuDetails.size) {

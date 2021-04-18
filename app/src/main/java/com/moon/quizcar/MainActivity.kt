@@ -54,16 +54,20 @@ class MainActivity : AppCompatActivity() {
 
         binding.purchase.setOnClickListener {
             MaterialAlertDialogBuilder(this).apply {
+                var pref = getSharedPreferences("quiz", MODE_PRIVATE)
                 val view = LayoutInflater.from(this@MainActivity)
                     .inflate(R.layout.dialog_purchase, null, false).apply {
                         findViewById<ConstraintLayout>(R.id.thousand_layout).setOnClickListener {
                             billingManager.purchase("1000", this@MainActivity)
+                            pref.edit().putInt("purchase", 1000).commit()
                         }
                         findViewById<ConstraintLayout>(R.id.five_thousand_layout).setOnClickListener {
                             billingManager.purchase("5000", this@MainActivity)
+                            pref.edit().putInt("purchase", 5000).commit()
                         }
                         findViewById<ConstraintLayout>(R.id.ten_thousand_layout).setOnClickListener {
                             billingManager.purchase("10000", this@MainActivity)
+                            pref.edit().putInt("purchase", 10000).commit()
                         }
                     }
                 setView(view)
@@ -77,16 +81,20 @@ class MainActivity : AppCompatActivity() {
         }
         binding.purchaseImage.setOnClickListener {
             MaterialAlertDialogBuilder(this).apply {
+                var pref = getSharedPreferences("quiz", MODE_PRIVATE)
                 val view = LayoutInflater.from(this@MainActivity)
                     .inflate(R.layout.dialog_purchase, null, false).apply {
                         findViewById<ConstraintLayout>(R.id.thousand_layout).setOnClickListener {
                             billingManager.purchase("1000", this@MainActivity)
+                            pref.edit().putInt("purchase", 1000).commit()
                         }
                         findViewById<ConstraintLayout>(R.id.five_thousand_layout).setOnClickListener {
                             billingManager.purchase("5000", this@MainActivity)
+                            pref.edit().putInt("purchase", 5000).commit()
                         }
                         findViewById<ConstraintLayout>(R.id.ten_thousand_layout).setOnClickListener {
                             billingManager.purchase("10000", this@MainActivity)
+                            pref.edit().putInt("purchase", 10000).commit()
                         }
                     }
                 setView(view)
@@ -108,6 +116,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, RankActivity::class.java))
         }
 
+        updateGold()
+
         MobileAds.initialize(this) {}
         binding.adView.run {
             loadAd(AdRequest.Builder().build())
@@ -117,6 +127,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         updateStage()
+    }
+
+    fun updateGold() {
+        var pref = getSharedPreferences("quiz", MODE_PRIVATE)
+        binding.gold.text = pref.getInt("gold", 200).toString()
     }
 
     private fun updateStage() {

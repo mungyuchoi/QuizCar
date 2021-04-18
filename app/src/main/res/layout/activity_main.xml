@@ -127,6 +127,17 @@
         app:layout_constraintStart_toStartOf="@id/purchase_image"
         app:layout_constraintTop_toBottomOf="@id/purchase_image" />
 
+    <TextView
+        android:id="@+id/gold"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:drawableStart="@drawable/ic_money"
+        android:drawablePadding="3dp"
+        android:layout_marginTop="30dp"
+        android:text="gold"
+        app:layout_constraintStart_toStartOf="@id/other_game"
+        app:layout_constraintEnd_toEndOf="@id/other_game"
+        app:layout_constraintTop_toBottomOf="@id/other_game"/>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
