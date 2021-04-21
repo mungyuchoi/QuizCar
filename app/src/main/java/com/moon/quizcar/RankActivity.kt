@@ -41,7 +41,7 @@ class RankActivity : AppCompatActivity() {
         }
 
         FirebaseDatabase.getInstance().reference.child("Rank")
-            .child((Calendar.MONTH + 1).toString() + "월").orderByChild("score").run {
+            .child((Calendar.MONTH + 1).toString() + "월").orderByChild("score").limitToFirst(100).run {
                 addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         rankList.clear()
