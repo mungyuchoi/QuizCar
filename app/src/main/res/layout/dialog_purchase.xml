@@ -72,6 +72,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/five_thousand_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="20% Sale!"
+            android:textColor="@color/black"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/five_thousand_price"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -110,6 +125,21 @@
             android:textSize="13dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ten_thousand_sale"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="30% Sale!"
+            android:textColor="@color/black"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView

@@ -44,7 +44,7 @@ class RankActivity : AppCompatActivity() {
                 addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         rankList.clear()
-                        rankList.add(Rank("순위", 0, "날짜"))
+                        rankList.add(Rank("ID", 0, "날짜"))
                         for (snap in snapshot.children) {
                             val info = snap.getValue(Rank::class.java)
                             rankList.add(info!!)
@@ -79,10 +79,12 @@ class RankAdapter(private val items: List<Rank>?) : RecyclerView.Adapter<RankAda
         }
         items[position].run {
             holder.rank.text =
-                if (position == 0) "Rank" else
+                if (position == 0) "순위" else
                     position.toString()
             holder.userId.text = id
-            holder.score.text = score.toString()
+            holder.score.text =
+                if (position == 0) "플레이 시간" else
+                score.toString()
             holder.date.text = date
         }
     }

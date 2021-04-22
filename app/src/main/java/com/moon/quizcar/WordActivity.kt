@@ -19,6 +19,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
 import com.moon.quizcar.data.Item
 import com.moon.quizcar.databinding.ActivityWordBinding
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -81,7 +82,7 @@ class WordActivity : AppCompatActivity() {
             loadAd(AdRequest.Builder().build())
         }
         frontAd = InterstitialAd(this).apply {
-            adUnitId = "ca-app-pub-8549606613390169/5837153647"
+            adUnitId = "ca-app-pub-3578188838033823/4319459080"
             // TEST
 //            adUnitId = "ca-app-pub-3940256099942544/1033173712"
             loadAd(AdRequest.Builder().build())
@@ -243,8 +244,7 @@ class WordActivity : AppCompatActivity() {
                                 Log.i(
                                     "MQ!", "rank id: ${editText.text.toString()}" +
                                             "\nscore: ${binding.score.text}" +
-                                            "\ndate: ${LocalDateTime.now()
-                                                .format(DateTimeFormatter.ISO_LOCAL_DATE)}"
+                                            "\ndate: ${SimpleDateFormat("MM-dd h:mm").format(Calendar.getInstance().time)}"
                                 )
                                 val registerRef =
                                     FirebaseDatabase.getInstance().reference.child("Rank")
@@ -253,7 +253,7 @@ class WordActivity : AppCompatActivity() {
                                     Rank(
                                         editText.text.toString(),
                                         Integer.parseInt(binding.score.text.toString()),
-                                        LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+                                        SimpleDateFormat("MM-dd h:mm").format(Calendar.getInstance().time)
                                     )
                                 )
                                 finish()
@@ -270,10 +270,6 @@ class WordActivity : AppCompatActivity() {
                     pause()
                 } else {
                     updateAnimate()
-                    binding.toolbar.findViewById<TextView>(R.id.stage)?.run {
-                        text = stage.toString()
-                    }
-
                 }
             } else {
                 // 틀림
@@ -367,7 +363,7 @@ class WordActivity : AppCompatActivity() {
 
     private fun nextStage() {
         binding.toolbar.findViewById<TextView>(R.id.stage)?.run {
-            text = stage.toString()
+            text = "LV.$stage"
         }
 
         var pref = getSharedPreferences("quiz", MODE_PRIVATE)

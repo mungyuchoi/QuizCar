@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
-    app:cardElevation="3dp"
     android:background="@color/white"
+    app:cardElevation="3dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
 
@@ -17,10 +17,11 @@
 
         <TextView
             android:id="@+id/rank"
-            android:layout_width="80dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center"
             android:textColor="@android:color/black"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +30,7 @@
 
         <TextView
             android:id="@+id/user_id"
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="sans-serif-medium"
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center"
             android:textColor="@android:color/black"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,10 +55,11 @@
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center"
             android:textColor="@android:color/black"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"

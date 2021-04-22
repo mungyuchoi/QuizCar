@@ -2,15 +2,23 @@ package com.moon.quizcar
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.moon.quizcar.databinding.ActivityMainBinding
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var billingManager: BillingManager
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -98,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 setView(view)
-                setTitle("구매")
+                setTitle("포인트 구입")
                 setMessage("원하는 상품을 구매해주세요.")
                 setNegativeButton("취소") { dialog, _ ->
                     dialog.dismiss()
@@ -136,6 +145,6 @@ class MainActivity : AppCompatActivity() {
     private fun updateStage() {
         var pref = getSharedPreferences("quiz", MODE_PRIVATE)
         val stage = pref.getInt("stage", 1)
-        binding.stage.text = "최고단계: $stage"
+        binding.stage.text = "내 전적: $stage"
     }
 }

@@ -22,6 +22,7 @@
         android:layout_height="80dp"
         android:text="Game Start!"
         android:textSize="30dp"
+        android:layout_marginTop="100dp"
         android:textStyle="bold"
         app:icon="@drawable/ic_run"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,9 +34,22 @@
         android:id="@+id/stage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:text="stage: 1"
-        app:layout_constraintEnd_toEndOf="@id/word"
-        app:layout_constraintStart_toStartOf="@id/word"
+        app:layout_constraintEnd_toStartOf="@id/gold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/word" />
+
+    <TextView
+        android:id="@+id/gold"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/ic_money"
+        android:drawablePadding="3dp"
+        android:text="gold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/stage"
         app:layout_constraintTop_toBottomOf="@id/word" />
 
     <ImageView
@@ -84,34 +98,12 @@
         app:layout_constraintTop_toBottomOf="@id/review_image" />
 
     <ImageView
-        android:id="@+id/rank_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_rank"
-        app:layout_constraintEnd_toStartOf="@id/purchase_image"
-        app:layout_constraintStart_toEndOf="@id/other_game_image"
-        app:layout_constraintTop_toBottomOf="@id/review" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/rank"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이달의 순위"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/rank_image"
-        app:layout_constraintStart_toStartOf="@id/rank_image"
-        app:layout_constraintTop_toBottomOf="@id/rank_image" />
-
-    <ImageView
         android:id="@+id/purchase_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/ic_purchase"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/rank_image"
         app:layout_constraintStart_toEndOf="@id/review_image"
         app:layout_constraintTop_toBottomOf="@id/stage" />
 
@@ -127,17 +119,28 @@
         app:layout_constraintStart_toStartOf="@id/purchase_image"
         app:layout_constraintTop_toBottomOf="@id/purchase_image" />
 
-    <TextView
-        android:id="@+id/gold"
+    <ImageView
+        android:id="@+id/rank_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_rank"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/purchase_image"
+        app:layout_constraintTop_toBottomOf="@id/stage" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/rank"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:drawableStart="@drawable/ic_money"
-        android:drawablePadding="3dp"
-        android:layout_marginTop="30dp"
-        android:text="gold"
-        app:layout_constraintStart_toStartOf="@id/other_game"
-        app:layout_constraintEnd_toEndOf="@id/other_game"
-        app:layout_constraintTop_toBottomOf="@id/other_game"/>
+        android:layout_height="wrap_content"
+        android:text="이달의 순위"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/rank_image"
+        app:layout_constraintStart_toStartOf="@id/rank_image"
+        app:layout_constraintTop_toBottomOf="@id/rank_image" />
+
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
