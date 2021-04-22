@@ -14,7 +14,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
 import com.moon.quizcar.databinding.ActivityRankBinding
 import java.util.*
 
@@ -35,7 +34,7 @@ class RankActivity : AppCompatActivity() {
         }
 
 
-        MobileAds.initialize(this) {}
+        MobileAds.initialize(this, "ca-app-pub-3578188838033823~6163546889")
         binding.adView.run {
             loadAd(AdRequest.Builder().build())
         }

@@ -11,24 +11,14 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.rewarded.RewardItem
-import com.google.android.gms.ads.rewarded.RewardedAd
-import com.google.android.gms.ads.rewarded.RewardedAdCallback
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.gms.ads.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
 import com.moon.quizcar.data.Item
 import com.moon.quizcar.databinding.ActivityWordBinding
-import kotlinx.android.synthetic.main.activity_word.view.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -37,7 +27,7 @@ import kotlin.collections.ArrayList
 class WordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWordBinding
-    private lateinit var rewardedAd: RewardedAd
+    private lateinit var frontAd: InterstitialAd
     private lateinit var timerTask: Timer
 
     private var stage = 1
@@ -86,26 +76,38 @@ class WordActivity : AppCompatActivity() {
     }
 
     private fun initAds() {
-        MobileAds.initialize(this) {}
+        MobileAds.initialize(this, "ca-app-pub-3578188838033823~6163546889")
         binding.adView.run {
             loadAd(AdRequest.Builder().build())
         }
+        frontAd = InterstitialAd(this).apply {
+            adUnitId = "ca-app-pub-8549606613390169/5837153647"
+            // TEST
+//            adUnitId = "ca-app-pub-3940256099942544/1033173712"
+            loadAd(AdRequest.Builder().build())
+            adListener = object : AdListener() {
 
-        rewardedAd = RewardedAd(
-            this,
-            "ca-app-pub-3578188838033823/6920651821"
-        )
-        val adLoadCallback = object : RewardedAdLoadCallback() {
-            override fun onRewardedAdLoaded() {
-                super.onRewardedAdLoaded()
-                binding.adsVideo.isEnabled = true
-            }
+                override fun onAdClosed() {
+                    super.onAdClosed()
+                    frontAd.loadAd(AdRequest.Builder().build())
+                    Log.i("MQ!", "onAdClosed")
+                    var pref = getSharedPreferences("quiz", MODE_PRIVATE)
+                    var gold = pref.getInt("gold", 200)
+                    gold += 290
+                    binding.toolbar.findViewById<TextView>(R.id.gold).run {
+                        text = gold.toString()
+                    }
+                    pref.edit().putInt("gold", gold).commit()
+                    Toast.makeText(this@WordActivity, "290점이 추가 되었습니다.", Toast.LENGTH_SHORT)
+                        .show()
+                }
 
-            override fun onRewardedAdFailedToLoad(adError: LoadAdError?) {
-                super.onRewardedAdFailedToLoad(adError)
+                override fun onAdLoaded() {
+                    super.onAdLoaded()
+                    binding.adsVideo.isEnabled = true
+                }
             }
         }
-        rewardedAd.loadAd(AdRequest.Builder().build(), adLoadCallback)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -154,57 +156,48 @@ class WordActivity : AppCompatActivity() {
             start()
         }
         binding.adsVideo.setOnClickListener {
-            if (rewardedAd.isLoaded) {
-                val adCallback = object : RewardedAdCallback() {
-                    override fun onRewardedAdOpened() {
-                        // Ad opened.
-                    }
-
-                    override fun onRewardedAdClosed() {
-                        // Ad closed.
-                        rewardedAd = createAndLoadRewardedAd()
-                    }
-
-                    override fun onUserEarnedReward(@NonNull reward: RewardItem) {
-                        // User earned reward.
-                        Log.i("MQ!", "onUserEarnedRewards")
-                        var gold = pref.getInt("gold", 200)
-                        gold += 290
-                        binding.toolbar.findViewById<TextView>(R.id.gold).run {
-                            text = gold.toString()
-                        }
-                        pref.edit().putInt("gold", gold).commit()
-                        Toast.makeText(this@WordActivity, "290점이 추가 되었습니다.", Toast.LENGTH_SHORT)
-                            .show()
-
-                    }
-
-                    override fun onRewardedAdFailedToShow(adError: AdError) {
-                        // Ad failed to display.
-                    }
-                }
-                rewardedAd.show(this, adCallback)
+            if (frontAd.isLoaded) {
+                frontAd.show()
             } else {
                 Toast.makeText(this, "아직 광고 준비가 되지 않았습니다. \n로딩이 된 후에 선택 해주세요.", Toast.LENGTH_SHORT)
                     .show()
             }
-        }
-    }
 
-    private fun createAndLoadRewardedAd(): RewardedAd {
-        val rewardedAd = RewardedAd(this, "ca-app-pub-3578188838033823/6920651821")
-        val adLoadCallback = object : RewardedAdLoadCallback() {
-            override fun onRewardedAdLoaded() {
-                // Ad successfully loaded.
-                binding.adsVideo.isEnabled = true
-            }
-
-            override fun onRewardedAdFailedToLoad(adError: LoadAdError) {
-                // Ad failed to load.
-            }
+//            if (rewardedAd.isLoaded) {
+//                val adCallback = object : RewardedAdCallback() {
+//                    override fun onRewardedAdOpened() {
+//                        // Ad opened.
+//                    }
+//
+//                    override fun onRewardedAdClosed() {
+//                        // Ad closed.
+//                        rewardedAd = createAndLoadRewardedAd()
+//                    }
+//
+//                    override fun onUserEarnedReward(@NonNull reward: RewardItem) {
+//                        // User earned reward.
+//                        Log.i("MQ!", "onUserEarnedRewards")
+//                        var gold = pref.getInt("gold", 200)
+//                        gold += 290
+//                        binding.toolbar.findViewById<TextView>(R.id.gold).run {
+//                            text = gold.toString()
+//                        }
+//                        pref.edit().putInt("gold", gold).commit()
+//                        Toast.makeText(this@WordActivity, "290점이 추가 되었습니다.", Toast.LENGTH_SHORT)
+//                            .show()
+//
+//                    }
+//
+//                    override fun onRewardedAdFailedToShow(adError: AdError) {
+//                        // Ad failed to display.
+//                    }
+//                }
+//                rewardedAd.show(this, adCallback)
+//            } else {
+//                Toast.makeText(this, "아직 광고 준비가 되지 않았습니다. \n로딩이 된 후에 선택 해주세요.", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
         }
-        rewardedAd.loadAd(AdRequest.Builder().build(), adLoadCallback)
-        return rewardedAd
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

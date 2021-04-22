@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, RankActivity::class.java))
         }
 
-        MobileAds.initialize(this) {}
+        MobileAds.initialize(this, "ca-app-pub-3578188838033823~6163546889")
         binding.adView.run {
             loadAd(AdRequest.Builder().build())
         }

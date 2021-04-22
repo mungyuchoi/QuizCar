@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.moon.quizcar">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
@@ -15,17 +15,23 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3578188838033823~6163546889"/>
+            android:value="ca-app-pub-3578188838033823~6163546889" />
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WordActivity"/>
-        <activity android:name=".RankActivity"/>
+        <activity
+            android:name=".WordActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".RankActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>  
