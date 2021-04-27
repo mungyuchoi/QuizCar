@@ -248,7 +248,7 @@ class WordActivity : AppCompatActivity() {
                                 )
                                 val registerRef =
                                     FirebaseDatabase.getInstance().reference.child("Rank")
-                                        .child((Calendar.MONTH + 1).toString() + "월").push()
+                                        .child((Calendar.MONTH + 2).toString() + "월").push()
                                 registerRef.setValue(
                                     Rank(
                                         editText.text.toString(),
