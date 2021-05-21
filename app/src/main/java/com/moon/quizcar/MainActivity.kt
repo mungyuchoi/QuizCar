@@ -69,7 +69,8 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.word.setOnClickListener {
-            startActivity(Intent(this, WordActivity::class.java))
+//            startActivity(Intent(this, WordActivity::class.java))
+            startActivity(Intent(this, StageActivity::class.java))
         }
 
         binding.otherGameImage.setOnClickListener {
@@ -190,6 +191,15 @@ class MainActivity : AppCompatActivity() {
         binding.rankImage.setOnClickListener {
             Toast.makeText(this, "이달의 순위!", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, RankActivity::class.java))
+        }
+
+        binding.share.setOnClickListener {
+            var shareBody = "https://play.google.com/store/apps/details?id=$packageName"
+            var intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(android.content.Intent.EXTRA_TEXT, shareBody)
+            }
+            startActivity(Intent.createChooser(intent, "국산차 퀴즈 앱 공유"))
         }
 
         MobileAds.initialize(this, "ca-app-pub-3578188838033823~6163546889")
