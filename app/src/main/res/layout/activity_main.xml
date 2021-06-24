@@ -41,11 +41,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/stage"
+        android:id="@+id/level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="stage: 1"
+        android:text="level: 1"
         app:layout_constraintEnd_toStartOf="@id/gold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/word" />
@@ -59,7 +59,7 @@
         android:drawablePadding="3dp"
         android:text="gold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/stage"
+        app:layout_constraintStart_toEndOf="@id/level"
         app:layout_constraintTop_toBottomOf="@id/word" />
 
     <ImageView
@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toStartOf="@id/review_image"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/stage" />
+        app:layout_constraintTop_toBottomOf="@id/level" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/other_game"
@@ -93,7 +93,7 @@
         android:src="@drawable/ic_review"
         app:layout_constraintEnd_toStartOf="@id/purchase_image"
         app:layout_constraintStart_toEndOf="@id/other_game_image"
-        app:layout_constraintTop_toBottomOf="@id/stage" />
+        app:layout_constraintTop_toBottomOf="@id/level" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/review"
@@ -115,7 +115,7 @@
         android:src="@drawable/ic_purchase"
         app:layout_constraintEnd_toStartOf="@id/rank_image"
         app:layout_constraintStart_toEndOf="@id/review_image"
-        app:layout_constraintTop_toBottomOf="@id/stage" />
+        app:layout_constraintTop_toBottomOf="@id/level" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/purchase"
@@ -137,7 +137,7 @@
         android:src="@drawable/ic_rank"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/purchase_image"
-        app:layout_constraintTop_toBottomOf="@id/stage" />
+        app:layout_constraintTop_toBottomOf="@id/level" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/rank"

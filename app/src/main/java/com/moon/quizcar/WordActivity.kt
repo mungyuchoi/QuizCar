@@ -59,13 +59,22 @@ class WordActivity : AppCompatActivity() {
             )
         }
 
-        for (i in 0 until 34) {
+        var pref = getSharedPreferences("quiz", MODE_PRIVATE)
+        val level = pref.getInt("level", 1)
+        var last = level *10
+
+        // TODO change 40
+        if(last == 40) last = 34
+        for (i in 0 until last) {
             list.add(Item(Const().thumbnail[i], Const().name[i]))
         }
         list.shuffle()
         binding.toolbar.findViewById<TextView>(R.id.gold).run {
             var pref = getSharedPreferences("quiz", MODE_PRIVATE)
             text = pref.getInt("gold", 200).toString()
+        }
+        binding.toolbar.findViewById<TextView>(R.id.stage)?.run {
+            text = "LV.${pref.getInt("level", 1)}"
         }
 
         nextStage()
@@ -219,54 +228,27 @@ class WordActivity : AppCompatActivity() {
         textView.setOnClickListener {
             if (textView.text.toString().equals(list[stage - 1].name, ignoreCase = true)) {
                 // 정답
+                var pref = getSharedPreferences("quiz", MODE_PRIVATE)
                 binding.toolbar.findViewById<TextView>(R.id.gold).run {
-                    var pref = getSharedPreferences("quiz", MODE_PRIVATE)
                     val value = pref.getInt("gold", 200) + 10
                     text = value.toString()
                     pref.edit().putInt("gold", value).commit()
                 }
-                if (stage == list.size) {
+
+                var level = pref.getInt("level", 1)
+                if (stage == level *10) {
                     // Result화면으로 변경
                     binding.board.visibility = View.INVISIBLE
                     binding.wordResult.visibility = View.VISIBLE
-                    binding.result.text = "결과: $stage\n최고: $lastStage"
-                    binding.continueGame.text = "순위 올리기"
-                    binding.continueGame.setOnClickListener {
-                        MaterialAlertDialogBuilder(this).apply {
-                            val view = LayoutInflater.from(this@WordActivity)
-                                .inflate(R.layout.dialog_rank, null, false)
-                            val editText = view.findViewById<EditText>(R.id.edit_rank)
-                            setView(view)
-                            setTitle("순위")
-                            setMessage("아이디를 입력해주세요.")
-                            setPositiveButton("올리기") { dialog, _ ->
-                                // Firebase ref update
-                                Log.i(
-                                    "MQ!", "rank id: ${editText.text.toString()}" +
-                                            "\nscore: ${binding.score.text}" +
-                                            "\ndate: ${SimpleDateFormat("MM-dd h:mm").format(Calendar.getInstance().time)}"
-                                )
-                                val registerRef =
-                                    FirebaseDatabase.getInstance().reference.child("Rank")
-                                        .child((Calendar.MONTH + 2).toString() + "월").push()
-                                registerRef.setValue(
-                                    Rank(
-                                        editText.text.toString(),
-                                        Integer.parseInt(binding.score.text.toString()),
-                                        SimpleDateFormat("MM-dd h:mm").format(Calendar.getInstance().time)
-                                    )
-                                )
-                                finish()
-                                startActivity(Intent(this@WordActivity, RankActivity::class.java))
-                                dialog.dismiss()
-                            }
-                            setNegativeButton("취소") { dialog, _ ->
-                                dialog.dismiss()
-                            }
-                            show()
-                        }
-                    }
+                    binding.result.text = "다음 라운드 활성화되었습니다."
                     binding.description.text = "축하합니다! 모두 풀었습니다!"
+                    binding.continueGame.text = "다음 라운드 플레이"
+                    Toast.makeText(this@WordActivity, "게임 끝! 다음 라운드 진출!", Toast.LENGTH_SHORT).show()
+                    pref.edit().putInt("level", pref.getInt("level", 1) + 1).apply()
+                    binding.continueGame.setOnClickListener {
+                        finish()
+                    }
+
                     pause()
                 } else {
                     updateAnimate()
@@ -354,7 +336,9 @@ class WordActivity : AppCompatActivity() {
                     }
                     nextStage()
                 } else {
-                    Toast.makeText(this@WordActivity, "게임 끝!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@WordActivity, "게임 끝! 다음 라운드 진출!", Toast.LENGTH_SHORT).show()
+                    var pref = getSharedPreferences("quiz", MODE_PRIVATE)
+                    pref.edit().putInt("level", pref.getInt("level", 1) + 1)
                     finish()
                 }
 
@@ -362,10 +346,6 @@ class WordActivity : AppCompatActivity() {
     }
 
     private fun nextStage() {
-        binding.toolbar.findViewById<TextView>(R.id.stage)?.run {
-            text = "LV.$stage"
-        }
-
         var pref = getSharedPreferences("quiz", MODE_PRIVATE)
         pref.edit().putInt("stage", stage).commit()
         binding.thumbnail.setImageResource(list[stage - 1].thumbnail)

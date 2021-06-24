@@ -27,10 +27,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.moon.quizcar.databinding.ActivityMainBinding
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -70,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.word.setOnClickListener {
 //            startActivity(Intent(this, WordActivity::class.java))
-            startActivity(Intent(this, StageActivity::class.java))
+            startActivity(Intent(this, LevelActivity::class.java))
         }
 
         binding.otherGameImage.setOnClickListener {
@@ -210,7 +206,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        updateStage()
+        updateLevel()
         updateGold()
     }
 
@@ -219,10 +215,10 @@ class MainActivity : AppCompatActivity() {
         binding.gold.text = pref.getInt("gold", 200).toString()
     }
 
-    private fun updateStage() {
+    private fun updateLevel() {
         var pref = getSharedPreferences("quiz", MODE_PRIVATE)
-        val stage = pref.getInt("stage", 1)
-        binding.stage.text = "내 전적: $stage"
+        val level = pref.getInt("level", 1)
+        binding.level.text = "레벨: $level"
     }
 }
 

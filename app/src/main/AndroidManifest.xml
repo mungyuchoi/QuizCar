@@ -33,7 +33,7 @@
             android:name=".RankActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".StageActivity"
+            android:name=".LevelActivity"
             android:launchMode="singleTop" />
     </application>
 

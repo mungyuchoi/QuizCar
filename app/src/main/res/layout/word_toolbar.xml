@@ -34,7 +34,6 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="16dp"
-        android:text="LV.1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
